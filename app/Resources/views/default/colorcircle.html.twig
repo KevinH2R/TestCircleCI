@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container" style="width: 100vw; height: 100vh;">
+            <div style="position: absolute">
+                <form>
+                    <div><label>Normal <input type="radio" id="none-input" name="generatingRange" checked></label></div>
+                    <div><label>Darken <input type="radio" id="dark-input" name="generatingRange"></label></div>
+                    <div><label>Tint <input type="radio" id="tint-input" name="generatingRange"></label></div>
+                </form>
+                <div><label>Interval <input type="number" id="interval-input" value="250"></label><button id="interval-button">Ok</button></div>
+                <div><label>Size <input type="number" id="size-input" value="30"></label><button id="size-button">Ok</button></div>
+                <button id="clear">Clear</button>
+            </div>
+            <div id="color-container" style="">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {#if you include jquery here, the scripts that need jquery will fail because jquery exists since this point !#}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var sideLength = $('#color-container').width();
+            var colorDivSideLength = 30;
+
+            var isDarken = 0;
+            var interval = 250;
+            var myInterval;
+
+            initInterval();
+
+            function initInterval()
+            {
+                myInterval = setInterval(function() {
+                    var xpos = Math.floor(Math.random() * (sideLength - colorDivSideLength));
+                    var ypos = Math.floor(Math.random() * (sideLength - colorDivSideLength));
+
+                    var r = Math.round(255 / sideLength * xpos);
+                    var b = 255- r;
+                    var g = Math.round(255 / sideLength * ypos);
+
+                    if (isDarken == 1) {
+                        r = Math.round(r / 4);
+                        g = Math.round(g / 2);
+                        b = Math.round(b * 3 / 4);
+                    }
+                    else if (isDarken == 2){
+                        r = Math.round(r + (255 - r) / 4);
+                        g = Math.round(g + (255 - g) / 2);
+                        b = Math.round(b+ (255 - b) * 3 / 4);
+                    }
+
+                    var hexValue = rgbToHex(r,g,b);
+//                );
+                    $('#color-container').append('<div class="color-div"></div>');
+                    var created = $('#color-container .color-div:last');
+                    created.css({
+                        'left': xpos,
+                        'top': ypos,
+                        'width': colorDivSideLength,
+                        'height': colorDivSideLength,
+                        'background-color': hexValue
+                    });
+                }, interval);
+            }
+
+
+            function componentToHex(c) {
+                var hex = c.toString(16);
+                return hex.length == 1 ? "0" + hex : hex;
+            }
+            function rgbToHex(r, g, b) {
+                return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+            }
+            $('#dark-input').click(function() {
+                isDarken = 1;
+            });
+            $('#tint-input').click(function() {
+                isDarken = 2;
+            });
+            $('#none-input').click(function() {
+                isDarken = 0;
+            });
+
+            $('#interval-button').click(function() {
+                interval = $('#interval-input').val();
+                clearInterval(myInterval);
+                initInterval();
+            });
+
+            $('#size-button').click(function() {
+                colorDivSideLength = $('#size-input').val();
+            });
+
+            $('#clear').click(function() {
+                $('#color-container').html('');
+            });
+        })
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .color-div {
+            position: absolute;
+            display: inline;
+            background-color: blue;
+            border-radius: 50%;
+        }
+        #container {
+        }
+
+        #color-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background-color: #232323;
+            margin: auto;
+        }
+    </style>
+{% endblock %}

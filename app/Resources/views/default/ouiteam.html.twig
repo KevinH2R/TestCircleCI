@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <img id="myimg" src="{{ asset('img/ouiteam.jpg') }}" alt="ouiteam"/>
+            <div id="circles-div">
+                {% for i in 0..5000 %}
+                    <div class="circle" id="circle{{ i }}"></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {#if you include jquery here, the scripts that need jquery will fail because jquery exists since this point !#}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            var img = document.getElementById('myimg');
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+
+            var circles = [];
+            for (i = 0; i < 5000; i++) {
+                circles[i] = $('#circle' + i);
+            }
+            var count = 0;
+
+            var circleDiv = $('#circles-div');
+
+            circleDiv.css({
+                'width' : img.width,
+                'height' : img.height
+            });
+
+            var context = canvas.getContext('2d');
+
+
+
+//            function repeatOften() {
+//                var xpos = Math.floor(Math.random() * img.width);
+//                var ypos = Math.floor(Math.random() * img.height);
+//                var pixelData = context.getImageData(xpos, ypos, 1, 1).data;
+//                var hexValue = rgbToHex(pixelData[0],pixelData[1],pixelData[2]);
+//
+//                circles[count].css({
+//                    'left': xpos,
+//                    'top': ypos,
+//                    'background-color': hexValue
+//                });
+//                ++count;
+//                if (count > 5000) {
+//                    circleDiv.html("");
+//                    count = 0;
+//                }
+//                requestAnimationFrame(repeatOften)
+//            }
+//            requestAnimationFrame(repeatOften);
+            setInterval(function () {
+
+                var xpos = Math.floor(Math.random() * img.width);
+                var ypos = Math.floor(Math.random() * img.height);
+                var pixelData = context.getImageData(xpos, ypos, 1, 1).data;
+                var hexValue = rgbToHex(pixelData[0],pixelData[1],pixelData[2]);
+
+                circles[count].css({
+                    'left': xpos,
+                    'top': ypos,
+                    'background-color': hexValue
+                });
+                ++count;
+                if (count > 5000) {
+                    circleDiv.html("");
+                    count = 0;
+                }
+            }, 10);
+
+            function componentToHex(c) {
+                var hex = c.toString(16);
+                return hex.length == 1 ? "0" + hex : hex;
+            }
+            function rgbToHex(r, g, b) {
+                return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+            }
+        })
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background-color: #232323;
+        }
+        #myimg{
+            /*width: 1000px;*/
+            position: absolute;
+            display: none;
+        }
+        #circles-div {
+            position: relative;
+            width: 100%;
+            height: 100%;
+         }
+
+        .circle {
+            position: absolute;
+            display: inline;
+            background-color: blue;
+            border-radius: 50%;
+            width: 2px;
+            height: 2px;
+        }
+    </style>
+{% endblock %}
