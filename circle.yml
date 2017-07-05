@@ -5,8 +5,3 @@ general:
   branches:
     only:
      - test
-deployment:
-  success:
-    branch: successful-test
-    commands:
-      - deploy.sh
