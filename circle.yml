@@ -5,3 +5,6 @@ general:
   branches:
     only:
      - test
+deployment:
+  success:
+    branch: successful-test
