@@ -22,6 +22,5 @@ class TxtWordsLoaderTest extends TestCase
         $loader->loadFile($fileToLoad);
 
         $this->assertCount(5, $loader->getWords());
-
     }
 }

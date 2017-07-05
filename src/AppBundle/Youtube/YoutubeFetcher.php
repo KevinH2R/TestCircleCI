@@ -25,6 +25,6 @@ class YoutubeFetcher
     {
         if (!empty($this->logger))
             $this->logger->info('A youtube thumbnail has been fetched');
-        return sprintf("https://img.youtube.com/vi/%s/0.jpg", $videoId);
+        return sprintf("https://img.youtube.com/vi/%s/default.jpg", $videoId);
     }
 }
