@@ -17,7 +17,7 @@ class TxtWordsLoaderTest extends TestCase
 {
     public function testThatItCanReadTxtFiles()
     {
-        $fileToLoad = __DIR__.'\5_words_dummy.txt';
+        $fileToLoad = __DIR__.'/5_words_dummy.txt';
         $loader = new TxtWordsLoader();
         $loader->loadFile($fileToLoad);
 
