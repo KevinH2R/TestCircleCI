@@ -5,3 +5,7 @@ general:
   branches:
     only:
      - test
+checkout:
+  post:
+    - git checkout successful-test
+    - git merge test
