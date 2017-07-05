@@ -9,6 +9,7 @@
 namespace Tests\AppBundle\WordList;
 
 
+use AppBundle\WordList\JSonWordsLoader;
 use AppBundle\WordList\NotValidFormatException;
 use PHPUnit\Framework\TestCase;
 

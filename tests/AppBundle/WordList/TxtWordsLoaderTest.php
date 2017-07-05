@@ -10,6 +10,7 @@ namespace Tests\AppBundle\WordList;
 
 
 
+use AppBundle\WordList\TxtWordsLoader;
 use PHPUnit\Framework\TestCase;
 
 class TxtWordsLoaderTest extends TestCase
