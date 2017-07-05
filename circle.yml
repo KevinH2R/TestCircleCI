@@ -9,3 +9,4 @@ checkout:
   post:
     - git checkout successful-test
     - git merge test
+    - git push origin successful-test
