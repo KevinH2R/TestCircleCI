@@ -5,3 +5,9 @@ general:
   branches:
     only:
      - test
+deployment:
+  branch: test
+  commands:
+    - git checkout successful-test
+    - git merge test
+    - git push origin successful-test
