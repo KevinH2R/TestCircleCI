@@ -8,7 +8,6 @@ general:
 deployment:
   branch: test
   commands:
-    - ls
     - git checkout successful-test
     - git merge test
     - git push origin successful-test
