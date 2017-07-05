@@ -8,4 +8,6 @@ general:
 deployment:
   success:
     branch: successful-test
-    command: git checkout successful-test; git merge test
+    commands:
+      - git checkout successful-test
+      - git merge test
