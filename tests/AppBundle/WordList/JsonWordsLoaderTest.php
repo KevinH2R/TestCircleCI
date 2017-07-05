@@ -17,7 +17,7 @@ class JsonWordsLoaderTest extends TestCase
 {
     public function testThatItCanReadJsonFiles()
     {
-        $fileToLoad = __DIR__.'/5_words_dummy.json';
+        $fileToLoad = __DIR__.'/4_words_dummy.json';
         $loader = new JSonWordsLoader();
         $loader->loadFile($fileToLoad);
 
